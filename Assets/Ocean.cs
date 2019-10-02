@@ -64,15 +64,25 @@ public class Ocean : MonoBehaviour
         Vector3 baseTideForce = transform.forward * tideForce * -1;
         float currentMultiplier = GetHeightMapMagnitude() / forceMapMax;
         Vector3 mappedTideForce = baseTideForce + (baseTideForce * currentMultiplier);
-        return mappedTideForce
+        return mappedTideForce;
+    }
+
+    private void ApplyTideForceToPlayer()
+    {
+        Debug.Log(CalculateTideVector());
+        Vector3 tideForce = CalculateTideVector();
+        player.rBody.AddForce(tideForce);
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.transform.GetComponent<Player>() == player)
         {
+            /**
             Debug.Log("player in ocean");
             player.rBody.AddForce(transform.forward * -tideForce);
+            **/
+            ApplyTideForceToPlayer();
         }
     }
 
